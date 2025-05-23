@@ -4,7 +4,6 @@ import * as timeseriesChartPlugin from "@perses-dev/timeseries-chart-plugin";
 import * as timeSeriesTablePlugin from "@perses-dev/timeseries-table-plugin";
 import * as pieChartPlugin from "@perses-dev/pie-chart-plugin";
 import * as scatterChartPlugin from "@perses-dev/scatter-chart-plugin";
-import * as gaugeChartPlugin from "@perses-dev/gauge-chart-plugin";
 import * as statusHistoryChartPlugin from "@perses-dev/status-history-chart-plugin";
 import * as markdownPlugin from "@perses-dev/markdown-plugin";
 import * as staticListVariablePlugin from "@perses-dev/static-list-variable-plugin";
@@ -36,10 +35,6 @@ export const pluginLoader = dynamicImportPluginLoader([
   {
     resource: statusHistoryChartPlugin.getPluginModule(),
     importPlugin: () => Promise.resolve(statusHistoryChartPlugin),
-  },
-  {
-    resource: gaugeChartPlugin.getPluginModule(),
-    importPlugin: () => Promise.resolve(gaugeChartPlugin),
   },
   {
     resource: markdownPlugin.getPluginModule(),

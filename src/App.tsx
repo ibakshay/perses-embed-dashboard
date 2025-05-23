@@ -1,19 +1,8 @@
-import { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import Dashboard from "./components/PersesDashboard";
+import PersesDashboard from "./components/PersesDashboard";
 import "./App.css";
 
 function App() {
-  const [selected, setSelected] = useState("Dashboard");
-
-  return (
-    <div>
-      <Sidebar onSelect={setSelected} />
-      <div className="main-content">
-        {selected === "Dashboard" && <Dashboard />}
-      </div>
-    </div>
-  );
+  return <PersesDashboard />;
 }
 
 export default App;

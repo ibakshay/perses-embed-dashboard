@@ -13,7 +13,7 @@ type PersesDashboardProps = {
 };
 
 export function PersesDashboardProvider({ children }: PersesDashboardProps) {
-  const muiTheme = getTheme("dark");
+  const muiTheme = getTheme("light");
   const chartsTheme = generateChartsTheme(muiTheme, {});
 
   return (
