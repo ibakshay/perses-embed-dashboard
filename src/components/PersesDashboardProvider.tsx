@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@emotion/react";
 import { PluginRegistry } from "@perses-dev/plugin-system";
 import {
   ChartsProvider,
@@ -13,14 +14,18 @@ type PersesDashboardProps = {
 };
 
 export function PersesDashboardProvider({ children }: PersesDashboardProps) {
-  const muiTheme = getTheme("light");
+  const muiTheme = getTheme("dark");
   const chartsTheme = generateChartsTheme(muiTheme, {});
 
   return (
-    <ChartsProvider chartsTheme={chartsTheme}>
-      <ErrorBoundary FallbackComponent={ErrorAlert}>
-        <PluginRegistry pluginLoader={pluginLoader}>{children}</PluginRegistry>
-      </ErrorBoundary>
-    </ChartsProvider>
+    <ThemeProvider theme={muiTheme}>
+      <ChartsProvider chartsTheme={chartsTheme}>
+        <ErrorBoundary FallbackComponent={ErrorAlert}>
+          <PluginRegistry pluginLoader={pluginLoader}>
+            {children}
+          </PluginRegistry>
+        </ErrorBoundary>
+      </ChartsProvider>
+    </ThemeProvider>
   );
 }

@@ -594,50 +594,6 @@ export const sampleDashboard: DashboardResource = {
         },
       },
     ],
-    variables: [
-      {
-        kind: "ListVariable",
-        spec: {
-          display: {
-            name: "job",
-            hidden: false,
-          },
-          allowAllValue: false,
-          allowMultiple: false,
-          plugin: {
-            kind: "PrometheusLabelValuesVariable",
-            spec: {
-              labelName: "job",
-              matchers: ["prometheus_build_info{}"],
-            },
-          },
-          name: "job",
-          defaultValue: "kube-monitoring-prometheus",
-        },
-      },
-      {
-        kind: "ListVariable",
-        spec: {
-          display: {
-            name: "instance",
-            hidden: false,
-          },
-          allowAllValue: false,
-          allowMultiple: false,
-          plugin: {
-            kind: "PrometheusLabelValuesVariable",
-            spec: {
-              labelName: "instance",
-              matchers: [
-                'prometheus_build_info{job="kube-monitoring-prometheus"}',
-              ],
-            },
-          },
-          name: "instance",
-          defaultValue: "100.64.1.52:9090",
-        },
-      },
-    ],
     duration: "1h",
     refreshInterval: "0s",
     datasources: {},

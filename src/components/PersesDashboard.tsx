@@ -28,6 +28,8 @@ export default function PersesDashboard() {
               datasourceApi={datasourceApi}
               isReadonly={true}
               isVariableEnabled={true}
+              isEditing={false}
+              isCreating={false}
               isDatasourceEnabled={true}
             />
           </PersesDashboardProvider>
