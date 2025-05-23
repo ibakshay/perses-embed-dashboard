@@ -17,7 +17,7 @@ const globalDatasource: GlobalDatasourceResource = {
   },
 };
 
-const datasourceApi: DatasourceApi = {
+export const datasourceApi: DatasourceApi = {
   buildProxyUrl: () => "",
   getGlobalDatasource: async () => globalDatasource,
   listGlobalDatasources: async () => [],
