@@ -6,6 +6,7 @@ import * as pieChartPlugin from "@perses-dev/pie-chart-plugin";
 import * as scatterChartPlugin from "@perses-dev/scatter-chart-plugin";
 import * as statusHistoryChartPlugin from "@perses-dev/status-history-chart-plugin";
 import * as markdownPlugin from "@perses-dev/markdown-plugin";
+import * as tablePlugin from "@perses-dev/table-plugin";
 import * as staticListVariablePlugin from "@perses-dev/static-list-variable-plugin";
 
 /**
@@ -43,5 +44,9 @@ export const pluginLoader = dynamicImportPluginLoader([
   {
     resource: staticListVariablePlugin.getPluginModule(),
     importPlugin: () => Promise.resolve(staticListVariablePlugin),
+  },
+  {
+    resource: tablePlugin.getPluginModule(),
+    importPlugin: () => Promise.resolve(tablePlugin),
   },
 ]);

@@ -28,6 +28,7 @@
     "@perses-dev/stat-chart-plugin": "^0.7.0",
     "@perses-dev/static-list-variable-plugin": "^0.3.0",
     "@perses-dev/status-history-chart-plugin": "^0.7.0",
+    "@perses-dev/table-plugin": "^0.6.0",
     "@perses-dev/timeseries-chart-plugin": "^0.6.0",
     "@perses-dev/timeseries-table-plugin": "^0.7.0",
     "@tanstack/react-query": "^5.76.2",
