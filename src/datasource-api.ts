@@ -1,0 +1,26 @@
+import type { GlobalDatasourceResource } from "@perses-dev/core";
+import { type DatasourceApi } from "@perses-dev/dashboards";
+
+const globalDatasource: GlobalDatasourceResource = {
+  kind: "GlobalDatasource",
+  metadata: {
+    name: "default datasource",
+  },
+  spec: {
+    default: true,
+    plugin: {
+      kind: "PrometheusDatasource",
+      spec: {
+        directUrl: "https://prometheus.greenhouse-qa.eu-nl-1.cloud.sap",
+      },
+    },
+  },
+};
+
+const datasourceApi: DatasourceApi = {
+  buildProxyUrl: () => "",
+  getGlobalDatasource: async () => globalDatasource,
+  listGlobalDatasources: async () => [],
+  listDatasources: async () => [],
+  getDatasource: async () => undefined,
+};
