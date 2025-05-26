@@ -8,6 +8,7 @@ import {
   getTheme,
 } from "@perses-dev/components";
 import { pluginLoader } from "./PersesPluginRegistry";
+import { Typography } from "@mui/material";
 
 type PersesDashboardProps = {
   children: React.ReactNode;
@@ -18,14 +19,21 @@ export function PersesDashboardProvider({ children }: PersesDashboardProps) {
   const chartsTheme = generateChartsTheme(muiTheme, {});
 
   return (
-    <ThemeProvider theme={muiTheme}>
-      <ChartsProvider chartsTheme={chartsTheme}>
-        <ErrorBoundary FallbackComponent={ErrorAlert}>
-          <PluginRegistry pluginLoader={pluginLoader}>
-            {children}
-          </PluginRegistry>
-        </ErrorBoundary>
-      </ChartsProvider>
-    </ThemeProvider>
+    <>
+      <h1>Plugin Embedding - Dashboard</h1>
+      <Typography variant="body1" sx={{ marginBottom: "1rem" }}>
+        Below is an example of embedding a Perses dashboard in a React
+        application.
+      </Typography>
+      <ThemeProvider theme={muiTheme}>
+        <ChartsProvider chartsTheme={chartsTheme}>
+          <ErrorBoundary FallbackComponent={ErrorAlert}>
+            <PluginRegistry pluginLoader={pluginLoader}>
+              {children}
+            </PluginRegistry>
+          </ErrorBoundary>
+        </ChartsProvider>
+      </ThemeProvider>
+    </>
   );
 }
