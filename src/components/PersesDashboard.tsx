@@ -1,4 +1,4 @@
-import { datasourceApi } from "../datasource-api";
+import { datasourceApi } from "../persesApi";
 import { PersesDashboardProvider } from "./PersesDashboardProvider";
 import { ViewDashboard } from "@perses-dev/dashboards";
 import { sampleDashboard } from "../dashboard-sample";

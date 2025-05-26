@@ -13,46 +13,6 @@ export const sampleDashboard: DashboardResource = {
     display: {
       name: "Prometheus / Overview",
     },
-    variables: [
-      {
-        kind: "ListVariable",
-        spec: {
-          display: {
-            name: "job",
-            hidden: false,
-          },
-          allowAllValue: false,
-          allowMultiple: false,
-          plugin: {
-            kind: "PrometheusLabelValuesVariable",
-            spec: {
-              labelName: "job",
-              matchers: ["prometheus_build_info{}"],
-            },
-          },
-          name: "job",
-        },
-      },
-      {
-        kind: "ListVariable",
-        spec: {
-          display: {
-            name: "instance",
-            hidden: false,
-          },
-          allowAllValue: false,
-          allowMultiple: false,
-          plugin: {
-            kind: "PrometheusLabelValuesVariable",
-            spec: {
-              labelName: "instance",
-              matchers: ['prometheus_build_info{job="$job"}'],
-            },
-          },
-          name: "instance",
-        },
-      },
-    ],
     panels: {
       "0_0": {
         kind: "Panel",
@@ -483,6 +443,9 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Prometheus Stats",
+            collapse: {
+              open: true,
+            },
           },
           items: [
             {
@@ -502,6 +465,9 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Discovery",
+            collapse: {
+              open: true,
+            },
           },
           items: [
             {
@@ -530,13 +496,16 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Retrieval",
+            collapse: {
+              open: true,
+            },
           },
           items: [
             {
               x: 0,
               y: 0,
               width: 8,
-              height: 6,
+              height: 8,
               content: {
                 $ref: "#/spec/panels/2_0",
               },
@@ -545,7 +514,7 @@ export const sampleDashboard: DashboardResource = {
               x: 8,
               y: 0,
               width: 8,
-              height: 6,
+              height: 8,
               content: {
                 $ref: "#/spec/panels/2_1",
               },
@@ -554,7 +523,7 @@ export const sampleDashboard: DashboardResource = {
               x: 16,
               y: 0,
               width: 8,
-              height: 6,
+              height: 8,
               content: {
                 $ref: "#/spec/panels/2_2",
               },
@@ -567,13 +536,16 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Storage",
+            collapse: {
+              open: true,
+            },
           },
           items: [
             {
               x: 0,
               y: 0,
               width: 12,
-              height: 6,
+              height: 7,
               content: {
                 $ref: "#/spec/panels/3_0",
               },
@@ -582,7 +554,7 @@ export const sampleDashboard: DashboardResource = {
               x: 12,
               y: 0,
               width: 12,
-              height: 6,
+              height: 7,
               content: {
                 $ref: "#/spec/panels/3_1",
               },
@@ -595,13 +567,16 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Query",
+            collapse: {
+              open: true,
+            },
           },
           items: [
             {
               x: 0,
               y: 0,
               width: 12,
-              height: 6,
+              height: 7,
               content: {
                 $ref: "#/spec/panels/4_0",
               },
@@ -610,7 +585,7 @@ export const sampleDashboard: DashboardResource = {
               x: 12,
               y: 0,
               width: 12,
-              height: 6,
+              height: 7,
               content: {
                 $ref: "#/spec/panels/4_1",
               },
@@ -619,6 +594,48 @@ export const sampleDashboard: DashboardResource = {
         },
       },
     ],
+    variables: [
+      {
+        kind: "ListVariable",
+        spec: {
+          display: {
+            name: "job",
+            hidden: false,
+          },
+          allowAllValue: false,
+          allowMultiple: false,
+          plugin: {
+            kind: "PrometheusLabelValuesVariable",
+            spec: {
+              labelName: "job",
+              matchers: ["prometheus_build_info{}"],
+            },
+          },
+          name: "job",
+        },
+      },
+      {
+        kind: "ListVariable",
+        spec: {
+          display: {
+            name: "instance",
+            hidden: false,
+          },
+          allowAllValue: false,
+          allowMultiple: false,
+          plugin: {
+            kind: "PrometheusLabelValuesVariable",
+            spec: {
+              labelName: "instance",
+              matchers: ['prometheus_build_info{job="$job"}'],
+            },
+          },
+          name: "instance",
+        },
+      },
+    ],
     duration: "1h",
+    refreshInterval: "0s",
+    datasources: {},
   },
 };
