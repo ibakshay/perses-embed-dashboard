@@ -4,15 +4,55 @@ export const sampleDashboard: DashboardResource = {
   kind: "Dashboard",
   metadata: {
     name: "prometheus-overview",
-    createdAt: "2025-05-23T16:17:39.307996439Z",
-    updatedAt: "2025-05-23T16:17:39.307996439Z",
+    createdAt: "0001-01-01T00:00:00Z",
+    updatedAt: "0001-01-01T00:00:00Z",
     version: 0,
-    project: "greenhouse",
+    project: "playground",
   },
   spec: {
     display: {
       name: "Prometheus / Overview",
     },
+    variables: [
+      {
+        kind: "ListVariable",
+        spec: {
+          display: {
+            name: "job",
+            hidden: false,
+          },
+          allowAllValue: false,
+          allowMultiple: false,
+          plugin: {
+            kind: "PrometheusLabelValuesVariable",
+            spec: {
+              labelName: "job",
+              matchers: ["prometheus_build_info{}"],
+            },
+          },
+          name: "job",
+        },
+      },
+      {
+        kind: "ListVariable",
+        spec: {
+          display: {
+            name: "instance",
+            hidden: false,
+          },
+          allowAllValue: false,
+          allowMultiple: false,
+          plugin: {
+            kind: "PrometheusLabelValuesVariable",
+            spec: {
+              labelName: "instance",
+              matchers: ['prometheus_build_info{job="$job"}'],
+            },
+          },
+          name: "instance",
+        },
+      },
+    ],
     panels: {
       "0_0": {
         kind: "Panel",
@@ -25,24 +65,24 @@ export const sampleDashboard: DashboardResource = {
             spec: {
               columnSettings: [
                 {
-                  header: "Job",
                   name: "job",
+                  header: "Job",
                 },
                 {
-                  header: "Instance",
                   name: "instance",
+                  header: "Instance",
                 },
                 {
-                  header: "Version",
                   name: "version",
+                  header: "Version",
                 },
                 {
-                  hide: true,
                   name: "value",
+                  hide: true,
                 },
                 {
-                  hide: true,
                   name: "timestamp",
+                  hide: true,
                 },
               ],
             },
@@ -55,7 +95,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'count by (job, instance, version) (prometheus_build_info{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"})',
+                      'count by (job, instance, version) (prometheus_build_info{instance=~"$instance",job=~"$job"})',
                   },
                 },
               },
@@ -75,8 +115,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
               yAxis: {
                 format: {
@@ -93,7 +133,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'sum by (job, scrape_job, instance) (\n  rate(prometheus_target_sync_length_seconds_sum{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval])\n)',
+                      'sum by (job, scrape_job, instance) (\n  rate(prometheus_target_sync_length_seconds_sum{instance=~"$instance",job=~"$job"}[$__rate_interval])\n)',
                     seriesNameFormat: "{{job}} - {{instance}} - Metrics",
                   },
                 },
@@ -113,8 +153,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
             },
           },
@@ -126,7 +166,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'sum by (job, instance) (prometheus_sd_discovered_targets{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"})',
+                      'sum by (job, instance) (prometheus_sd_discovered_targets{instance=~"$instance",job=~"$job"})',
                     seriesNameFormat: "{{job}} - {{instance}} - Metrics",
                   },
                 },
@@ -147,8 +187,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
               yAxis: {
                 format: {
@@ -165,7 +205,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      '  rate(prometheus_target_interval_length_seconds_sum{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval])\n/\n  rate(prometheus_target_interval_length_seconds_count{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval])',
+                      '  rate(prometheus_target_interval_length_seconds_sum{instance=~"$instance",job=~"$job"}[$__rate_interval])\n/\n  rate(prometheus_target_interval_length_seconds_count{instance=~"$instance",job=~"$job"}[$__rate_interval])',
                     seriesNameFormat:
                       "{{job}} - {{instance}} - {{interval}} Configured",
                   },
@@ -186,8 +226,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
             },
           },
@@ -199,7 +239,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_exceeded_body_size_limit_total{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval]\n  )\n)',
+                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_exceeded_body_size_limit_total{instance=~"$instance",job=~"$job"}[$__rate_interval]\n  )\n)',
                     seriesNameFormat:
                       "exceeded body size limit: {{job}} - {{instance}} - Metrics",
                   },
@@ -213,7 +253,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_exceeded_sample_limit_total{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval]\n  )\n)',
+                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_exceeded_sample_limit_total{instance=~"$instance",job=~"$job"}[$__rate_interval]\n  )\n)',
                     seriesNameFormat:
                       "exceeded sample limit: {{job}} - {{instance}} - Metrics",
                   },
@@ -227,7 +267,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_sample_duplicate_timestamp_total{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval]\n  )\n)',
+                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_sample_duplicate_timestamp_total{instance=~"$instance",job=~"$job"}[$__rate_interval]\n  )\n)',
                     seriesNameFormat:
                       "duplicate timestamp: {{job}} - {{instance}} - Metrics",
                   },
@@ -241,7 +281,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_sample_out_of_bounds_total{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval]\n  )\n)',
+                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_sample_out_of_bounds_total{instance=~"$instance",job=~"$job"}[$__rate_interval]\n  )\n)',
                     seriesNameFormat:
                       "out of bounds: {{job}} - {{instance}} - Metrics",
                   },
@@ -255,7 +295,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_sample_out_of_order_total{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval]\n  )\n)',
+                      'sum by (job, instance) (\n  rate(\n    prometheus_target_scrapes_sample_out_of_order_total{instance=~"$instance",job=~"$job"}[$__rate_interval]\n  )\n)',
                     seriesNameFormat:
                       "out of order: {{job}} - {{instance}} - Metrics",
                   },
@@ -276,8 +316,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
             },
           },
@@ -289,7 +329,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'rate(prometheus_tsdb_head_samples_appended_total{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}[$__rate_interval])',
+                      'rate(prometheus_tsdb_head_samples_appended_total{instance=~"$instance",job=~"$job"}[$__rate_interval])',
                     seriesNameFormat:
                       "{{job}} - {{instance}} - {{remote_name}} - {{url}}",
                   },
@@ -310,8 +350,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
             },
           },
@@ -323,7 +363,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'prometheus_tsdb_head_series{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}',
+                      'prometheus_tsdb_head_series{instance=~"$instance",job=~"$job"}',
                     seriesNameFormat: "{{job}} - {{instance}} - Head Series",
                   },
                 },
@@ -343,8 +383,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
             },
           },
@@ -356,7 +396,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'prometheus_tsdb_head_chunks{instance="100.64.1.52:9090",job="kube-monitoring-prometheus"}',
+                      'prometheus_tsdb_head_chunks{instance=~"$instance",job=~"$job"}',
                     seriesNameFormat: "{{job}} - {{instance}} - Head Chunks",
                   },
                 },
@@ -376,8 +416,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
             },
           },
@@ -389,7 +429,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'rate(\n  prometheus_engine_query_duration_seconds_count{instance="100.64.1.52:9090",job="kube-monitoring-prometheus",slice="inner_eval"}[$__rate_interval]\n)',
+                      'rate(\n  prometheus_engine_query_duration_seconds_count{instance=~"$instance",job=~"$job",slice="inner_eval"}[$__rate_interval]\n)',
                     seriesNameFormat: "{{job}} - {{instance}} - Query Rate",
                   },
                 },
@@ -409,8 +449,8 @@ export const sampleDashboard: DashboardResource = {
             kind: "TimeSeriesChart",
             spec: {
               legend: {
-                mode: "table",
                 position: "bottom",
+                mode: "table",
               },
               yAxis: {
                 format: {
@@ -427,7 +467,7 @@ export const sampleDashboard: DashboardResource = {
                   kind: "PrometheusTimeSeriesQuery",
                   spec: {
                     query:
-                      'max by (slice) (\n  prometheus_engine_query_duration_seconds{instance="100.64.1.52:9090",job="kube-monitoring-prometheus",quantile="0.9"}\n)',
+                      'max by (slice) (\n  prometheus_engine_query_duration_seconds{instance=~"$instance",job=~"$job",quantile="0.9"}\n)',
                     seriesNameFormat: "{{slice}} - Duration",
                   },
                 },
@@ -443,9 +483,6 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Prometheus Stats",
-            collapse: {
-              open: true,
-            },
           },
           items: [
             {
@@ -465,9 +502,6 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Discovery",
-            collapse: {
-              open: true,
-            },
           },
           items: [
             {
@@ -496,16 +530,13 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Retrieval",
-            collapse: {
-              open: true,
-            },
           },
           items: [
             {
               x: 0,
               y: 0,
               width: 8,
-              height: 8,
+              height: 6,
               content: {
                 $ref: "#/spec/panels/2_0",
               },
@@ -514,7 +545,7 @@ export const sampleDashboard: DashboardResource = {
               x: 8,
               y: 0,
               width: 8,
-              height: 8,
+              height: 6,
               content: {
                 $ref: "#/spec/panels/2_1",
               },
@@ -523,7 +554,7 @@ export const sampleDashboard: DashboardResource = {
               x: 16,
               y: 0,
               width: 8,
-              height: 8,
+              height: 6,
               content: {
                 $ref: "#/spec/panels/2_2",
               },
@@ -536,16 +567,13 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Storage",
-            collapse: {
-              open: true,
-            },
           },
           items: [
             {
               x: 0,
               y: 0,
               width: 12,
-              height: 8,
+              height: 6,
               content: {
                 $ref: "#/spec/panels/3_0",
               },
@@ -554,7 +582,7 @@ export const sampleDashboard: DashboardResource = {
               x: 12,
               y: 0,
               width: 12,
-              height: 8,
+              height: 6,
               content: {
                 $ref: "#/spec/panels/3_1",
               },
@@ -567,16 +595,13 @@ export const sampleDashboard: DashboardResource = {
         spec: {
           display: {
             title: "Query",
-            collapse: {
-              open: true,
-            },
           },
           items: [
             {
               x: 0,
               y: 0,
               width: 12,
-              height: 8,
+              height: 6,
               content: {
                 $ref: "#/spec/panels/4_0",
               },
@@ -585,7 +610,7 @@ export const sampleDashboard: DashboardResource = {
               x: 12,
               y: 0,
               width: 12,
-              height: 8,
+              height: 6,
               content: {
                 $ref: "#/spec/panels/4_1",
               },
@@ -595,7 +620,5 @@ export const sampleDashboard: DashboardResource = {
       },
     ],
     duration: "1h",
-    refreshInterval: "0s",
-    datasources: {},
   },
 };
