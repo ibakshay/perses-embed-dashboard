@@ -8,6 +8,7 @@ import * as statusHistoryChartPlugin from "@perses-dev/status-history-chart-plug
 import * as markdownPlugin from "@perses-dev/markdown-plugin";
 import * as tablePlugin from "@perses-dev/table-plugin";
 import * as staticListVariablePlugin from "@perses-dev/static-list-variable-plugin";
+import * as statChartPlugin from "@perses-dev/stat-chart-plugin";
 
 /**
  * A PluginLoader that includes all the "built-in" plugins that are bundled with Perses by default and additional custom plugins
@@ -48,5 +49,9 @@ export const pluginLoader = dynamicImportPluginLoader([
   {
     resource: tablePlugin.getPluginModule(),
     importPlugin: () => Promise.resolve(tablePlugin),
+  },
+  {
+    resource: statChartPlugin.getPluginModule(),
+    importPlugin: () => Promise.resolve(statChartPlugin),
   },
 ]);

@@ -1,6 +1,6 @@
 import type { DashboardResource } from "@perses-dev/core";
 
-export const sampleDashboard: DashboardResource = {
+export const greenhouseDashboard: DashboardResource = {
   kind: "Dashboard",
   metadata: {
     name: "Greenhouse Platform Metrics",
@@ -384,73 +384,6 @@ export const sampleDashboard: DashboardResource = {
           ],
         },
       },
-      Remoteclusterswithexpiredkubeconfig: {
-        kind: "Panel",
-        spec: {
-          display: {
-            name: "Remote clusters with expired kubeconfig",
-          },
-          plugin: {
-            kind: "Table",
-            spec: {
-              density: "standard",
-              columnSettings: [
-                {
-                  name: "__name__",
-                  hide: true,
-                },
-                {
-                  name: "container",
-                  hide: true,
-                  enableSorting: false,
-                },
-                {
-                  name: "endpoint",
-                  hide: true,
-                },
-                {
-                  name: "instance",
-                  hide: true,
-                },
-                {
-                  name: "job",
-                  hide: true,
-                },
-                {
-                  name: "pod",
-                  hide: true,
-                },
-                {
-                  name: "service",
-                  hide: true,
-                },
-                {
-                  name: "timestamp",
-                  hide: true,
-                },
-                {
-                  name: "value",
-                  hide: true,
-                },
-              ],
-            },
-          },
-          queries: [
-            {
-              kind: "TimeSeriesQuery",
-              spec: {
-                plugin: {
-                  kind: "PrometheusTimeSeriesQuery",
-                  spec: {
-                    query:
-                      "greenhouse_cluster_kubeconfig_validity_seconds <= 0",
-                  },
-                },
-              },
-            },
-          ],
-        },
-      },
     },
     layouts: [
       {
@@ -519,15 +452,6 @@ export const sampleDashboard: DashboardResource = {
               height: 6,
               content: {
                 $ref: "#/spec/panels/PluginswithFailingtests",
-              },
-            },
-            {
-              x: 12,
-              y: 6,
-              width: 12,
-              height: 6,
-              content: {
-                $ref: "#/spec/panels/Remoteclusterswithexpiredkubeconfig",
               },
             },
           ],

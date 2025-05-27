@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { QueryParamProvider } from "use-query-params";
 import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 import { BrowserRouter } from "react-router-dom";
+import { greenhouseDashboard } from "../greenhouse-sample";
 
 export default function PersesDashboard() {
   console.log("Rendering Dashboard", datasourceApi);
@@ -24,7 +25,8 @@ export default function PersesDashboard() {
         <QueryParamProvider adapter={ReactRouter6Adapter}>
           <PersesDashboardProvider>
             <ViewDashboard
-              dashboardResource={sampleDashboard}
+              // dashboardResource={sampleDashboard}
+              dashboardResource={greenhouseDashboard}
               datasourceApi={datasourceApi}
               isReadonly={true}
               isVariableEnabled={true}

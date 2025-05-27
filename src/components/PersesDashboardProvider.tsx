@@ -20,10 +20,10 @@ export function PersesDashboardProvider({ children }: PersesDashboardProps) {
 
   return (
     <>
-      <h1>Plugin Embedding - Dashboard</h1>
+      <h1>🏠 Greenhouse Platform Dashboard</h1>
       <Typography variant="body1" sx={{ marginBottom: "1rem" }}>
-        Below is an example of embedding a Perses dashboard in a React
-        application.
+        Real-time monitoring and operational insights for Greenhouse platform
+        administrators
       </Typography>
       <ThemeProvider theme={muiTheme}>
         <ChartsProvider chartsTheme={chartsTheme}>
